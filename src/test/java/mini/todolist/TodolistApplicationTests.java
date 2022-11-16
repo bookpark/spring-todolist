@@ -19,13 +19,13 @@ class TodolistApplicationTests {
 	@Test
 	void testJpa() {
 		Todo todo1 = new Todo();
-		todo1.setTodoName("스프링 공부");
-		todo1.setCompleted(Boolean.FALSE);
+		todo1.setContent("스프링 공부");
+		todo1.setIsComplete(Boolean.FALSE);
 		this.todoRepository.save(todo1);
 
 		Todo todo2 = new Todo();
-		todo2.setTodoName("리액트 공부");
-		todo2.setCompleted(Boolean.FALSE);
+		todo2.setContent("리액트 공부");
+		todo2.setIsComplete(Boolean.FALSE);
 		this.todoRepository.save(todo2);
 	}
 
