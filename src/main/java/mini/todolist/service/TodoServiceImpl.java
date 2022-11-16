@@ -3,34 +3,36 @@ package mini.todolist.service;
 import lombok.RequiredArgsConstructor;
 import mini.todolist.domain.Todo;
 import mini.todolist.repository.TodoRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class TodoService {
+public class TodoServiceImpl implements TodoService {
 
     private final TodoRepository todoRepository;
 
-    public List<Todo> getTodoList() {
-        return this.todoRepository.findAll();
+    @Override
+    public List<Todo> getTodos(Sort sort) throws Exception {
+        return todoRepository.findAll();
     }
 
-    public void createTodo(String todoName) {
-        Todo todo = new Todo();
-        todo.setTodoName(todoName);
-        todo.setCompleted(Boolean.FALSE);
-        this.todoRepository.save(todo);
+    @Override
+    public void postTodo(Todo todo) throws Exception {
+        todoRepository.save(todo);
     }
 
-    @Transactional
-    public void deleteTodo(Long id) {
-        Todo todo = todoRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("해당 아이템이 없습니다. id=" + id)
-        );
-        this.todoRepository.delete(todo);
+    @Override
+    public void deleteTodo(Long id) throws Exception {
+        todoRepository.deleteById(id);
     }
+
+    @Override
+    public Todo findTodoById(Long id) throws Exception {
+        return todoRepository.findById(id).orElse(new Todo());
+    }
+
 }
